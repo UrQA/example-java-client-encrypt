@@ -16,7 +16,7 @@ public class UrQACryptor {
 	private Cipher encryptor;
 	private Cipher decryptor;
 	
-	public UrQACryptor(){
+	public UrQACryptor( String token ){
 		
 		// 참고 
 		// http://dukeom.wordpress.com/2013/01/03/aes256-%EC%95%94%ED%98%B8%ED%99%94%EC%8B%9C-java-security-invalidkeyexception-illegal-key-size-%ED%95%B4%EA%B2%B0-%EB%B0%A9%EC%95%88/
@@ -26,6 +26,11 @@ public class UrQACryptor {
 		var CHIPER_TYPE = 'aes-256-cbc';
 		var ENCODE_TYPE = 'base64';
 		 */
+		
+		if( null != token ){
+			HASH_UPDATE_DATA = token ;
+		}
+		
 		String IV = "";
 		
 		byte[] key = SHA256( HASH_UPDATE_DATA );
@@ -54,7 +59,9 @@ public class UrQACryptor {
 		byte[] encrypted = null;
 		try {
 			encrypted = encryptor.doFinal( src );
-		} catch (IllegalBlockSizeException | BadPaddingException e) {
+		} catch (IllegalBlockSizeException e ){
+			e.printStackTrace();
+		} catch ( BadPaddingException e) {
 			e.printStackTrace();
 		}
 		return Base64.encode( encrypted );
@@ -72,7 +79,9 @@ public class UrQACryptor {
 		
 		try {
 			ret = decryptor.doFinal( dec );
-		} catch (IllegalBlockSizeException | BadPaddingException e) {
+		} catch (IllegalBlockSizeException e ){
+			e.printStackTrace();
+		} catch ( BadPaddingException e) {
 			e.printStackTrace();
 		}
 		
