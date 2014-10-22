@@ -43,11 +43,8 @@ public class test {
 		String encrypted_msg = cryptor.encrypt( "test message".getBytes() );
 		String decrypted_msg = new String( cryptor.decrypt( encrypted_msg ) );
 		
-		
 		System.out.println("Encrypt : " + encrypted_msg );
 		System.out.println("Decrypt : " + decrypted_msg );
-		
-		System.out.println("ttt : " + new String( cryptor.decrypt("WgtOEDgHLWPao0CfW3wsNw==" ) ) ) ;
 
 		// send exception
 		try {

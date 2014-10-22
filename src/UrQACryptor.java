@@ -31,17 +31,19 @@ public class UrQACryptor {
 			HASH_UPDATE_DATA = token ;
 		}
 		
-		String IV = "";
+		String IV = "0000000000000000";
+		
+		byte[] iv = IV.getBytes();
 		
 		byte[] key = SHA256( HASH_UPDATE_DATA );
 		
 		try{
 			SecretKey secureKey = new SecretKeySpec(key, "AES");
 			encryptor = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			encryptor.init(Cipher.ENCRYPT_MODE, secureKey, new IvParameterSpec( new byte[16] ) );
+			encryptor.init(Cipher.ENCRYPT_MODE, secureKey, new IvParameterSpec( IV.getBytes() ) );
 			
 			decryptor = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			decryptor.init(Cipher.DECRYPT_MODE, secureKey, new IvParameterSpec( new byte[16] ) );
+			decryptor.init(Cipher.DECRYPT_MODE, secureKey, new IvParameterSpec( IV.getBytes() ) );
 			
 		}catch(Exception ex ){
 			ex.printStackTrace();
